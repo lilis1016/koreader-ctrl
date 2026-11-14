@@ -1,10 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="108dp" android:height="108dp"
-    android:viewportWidth="108" android:viewportHeight="108">
-    <!-- clean, calm rabbit silhouette -->
-    <path android:fillColor="#252A2A" android:pathData="M37,49 C29,35 27,13 34,12 C42,11 47,31 49,44 C52,42 56,42 59,44 C62,29 68,10 76,13 C83,16 77,37 69,50 C77,57 80,67 77,77 C73,89 62,95 51,94 C38,93 29,84 29,72 C29,62 32,54 37,49 Z" />
-    <path android:fillColor="#F4F1EA" android:pathData="M36,41 C32,29 32,18 35,18 C39,18 43,34 44,44 Z M68,44 C71,32 76,18 78,19 C81,21 76,34 72,43 Z" />
-    <path android:fillColor="#F4F1EA" android:pathData="M42,65a2.2,2.8 0,1 0,4.4 0a2.2,2.8 0,1 0,-4.4 0 M61,65a2.2,2.8 0,1 0,4.4 0a2.2,2.8 0,1 0,-4.4 0" />
-    <path android:fillColor="#C78D83" android:pathData="M51,72 Q54,69 57,72 Q54,76 51,72 Z" />
-</vector>
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android" android:src="@drawable/rabbit_user_icon" android:gravity="center" />

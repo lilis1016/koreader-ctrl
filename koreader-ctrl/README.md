@@ -8,14 +8,14 @@ HTTP Inspector 发送翻页 / 亮度 / 日夜模式等指令。
 
 ---
 
-## 版本 1.0.2 修复
+## 版本 1.0.3 修复
 
 - HTTP 指令改为单线程队列顺序发送，避免亮度增量事件并发交错；增加 `Cache-Control: no-store` / `Pragma: no-cache` 请求头。
 - 后台服务在屏幕熄灭期间持有 `PARTIAL_WAKE_LOCK`，屏幕点亮后立即释放；该锁不会主动点亮屏幕。
 - 设置映射时同时消费游戏手柄按键的 DOWN/UP，降低 D-pad 上下键被系统当作页面滚动的概率。
 - 主界面改为「首页 / 映射 / 后台 / 工具」四个底部导航页面。
 - 后台设置页增加图片选择入口，可创建使用自选图片的桌面快捷方式。Android 不允许普通应用在运行时直接替换已安装 APK 的应用图标；该功能创建的是自定义快捷方式。
-- 版本号升级为 1.0.2（versionCode 3），保留原有配置存储、签名配置与 GitHub Actions 工作流。
+- 版本号升级为 1.0.3（versionCode 3），保留原有配置存储、签名配置与 GitHub Actions 工作流。
 
 > 锁屏输入仍受 Android 设备厂商的蓝牙 HID 与系统输入分发策略限制。屏幕熄灭期间的部分唤醒锁可以帮助 CPU 保持处理能力，但不能保证所有 ROM 都会把唤醒屏幕的那一次按键同时交给无障碍服务。若某设备仍只亮屏不翻页，需要以该设备实测为准。
 
@@ -191,3 +191,6 @@ app/src/main/java/com/koreader/ctrl/
 | 预设存储 | `localStorage` | `SharedPreferences`（同名键 `joyconKeyMap`） |
 | 默认映射 | `defaultMap` | 完全相同 |
 | 协议 | `/koreader/event/<Name>` | 完全相同 |
+
+
+Version 1.0.3: refreshed warm-neutral/lavender visual theme, updated launcher artwork using the supplied rabbit image, and added the same full-color image as the notification large icon. Android status-bar small notification glyph remains monochrome by platform design.

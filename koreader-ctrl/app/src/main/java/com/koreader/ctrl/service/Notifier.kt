@@ -1,6 +1,7 @@
 package com.koreader.ctrl.service
 
 import android.app.Notification
+import android.graphics.BitmapFactory
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -57,6 +58,7 @@ object Notifier {
             .setContentTitle("KOReader 控制器运行中")
             .setContentText(status)
             .setSmallIcon(R.drawable.ic_stat_koreader)
+            .setLargeIcon(BitmapFactory.decodeResource(ctx.resources, R.drawable.rabbit_user_icon))
             .setContentIntent(pi)
             .addAction(0, "停止服务", stopPi)
             .setOngoing(true)
