@@ -2,6 +2,11 @@ name: Build APK
 on:
   push:
   workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: koreader-ctrl
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,10 +19,12 @@ jobs:
       - uses: android-actions/setup-android@v3
       - name: Create local.properties
         run: echo "sdk.dir=$ANDROID_HOME" > local.properties
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
       - name: Build
         run: ./gradlew :app:assembleRelease
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: apk
-          path: app/build/outputs/apk/release/*.apk
+          path: koreader-ctrl/app/build/outputs/apk/release/*.apk
