@@ -627,8 +627,7 @@ class MainActivity : AppCompatActivity() {
         txtPermStatus.text = buildString {
             append("无障碍服务：")
             append(if (a11y) "已开启（支持后台与锁屏收键）" else "未开启（仅应用在前台时收键）")
-            append("
-电池优化白名单：")
+            append("\n电池优化白名单：")
             append(if (battery) "已忽略电池优化" else "未设置（建议允许后台运行）")
         }
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">KOReader 手柄控制器</string>
+    <string name="app_name">翻页器</string>
     <string name="a11y_description">用于在其它应用处于前台或手机熄屏时接收蓝牙手柄按键，并转发为 KOReader 控制指令。本服务不读取屏幕内容。</string>
 
     <string name="label_ip">Kindle 局域网 IP</string>
