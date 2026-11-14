@@ -4,6 +4,11 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.ShortcutInfo
+import android.content.pm.ShortcutManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.Icon
 import android.hardware.input.InputManager
 import android.os.Bundle
 import android.provider.Settings
@@ -91,12 +96,14 @@ class MainActivity : AppCompatActivity() {
 
         bindViews()
         setupActions()
+        setupBottomNavigation()
 
         prefs.ensureDefaultPreset()
         reloadPresets()
 
         inputIp.setText(prefs.kindleIp)
         chkAutoStart.isChecked = prefs.autoStart
+        showTab("home")
 
         requestNeededPermissions()
         subscribeLog()
@@ -135,8 +142,7 @@ class MainActivity : AppCompatActivity() {
         bindAction(R.id.btnScreenshot, Action.SCREENSHOT)
         bindAction(R.id.btnGames, Action.GAME_HALL)
 
-        findViewById<Button>(R.id.btnOpenMapping).setOnClickListener { dialogMapping() }
-        findViewById<Button>(R.id.btnOpenQuickActions).setOnClickListener { dialogQuickActions() }
+        findViewById<Button>(R.id.btnChooseIcon).setOnClickListener { chooseCustomShortcutIcon() }
         findViewById<Button>(R.id.btnResetDefault).setOnClickListener { confirmResetDefault() }
         findViewById<Button>(R.id.btnCancelCapture).setOnClickListener {
             capturing = null
@@ -184,33 +190,97 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun showPanelDialog(panelId: Int, title: String) {
-        val panel = findViewById<LinearLayout>(panelId)
-        val parent = panel.parent as? ViewGroup ?: return
-        val originalIndex = parent.indexOfChild(panel)
-        parent.removeView(panel)
-        panel.visibility = View.VISIBLE
-        val scroll = android.widget.ScrollView(this).apply {
-            isFillViewport = true
-            addView(panel)
-        }
-        val dialog = AlertDialog.Builder(this)
-            .setTitle(title)
-            .setView(scroll)
-            .setNegativeButton(R.string.cancel, null)
-            .create()
-        dialog.setOnDismissListener {
-            (panel.parent as? ViewGroup)?.removeView(panel)
-            parent.addView(panel, originalIndex)
-            panel.visibility = View.GONE
-            renderMap()
-        }
-        dialog.show()
+    private fun setupBottomNavigation() {
+        findViewById<Button>(R.id.btnNavHome).setOnClickListener { showTab("home") }
+        findViewById<Button>(R.id.btnNavMapping).setOnClickListener { showTab("mapping") }
+        findViewById<Button>(R.id.btnNavService).setOnClickListener { showTab("service") }
+        findViewById<Button>(R.id.btnNavTools).setOnClickListener { showTab("tools") }
     }
 
-    private fun dialogMapping() = showPanelDialog(R.id.mappingPanel, "按键映射配置")
+    private fun showTab(tab: String) {
+        val pages = mapOf(
+            "home" to R.id.pageHome,
+            "mapping" to R.id.pageMapping,
+            "service" to R.id.pageService,
+            "tools" to R.id.pageTools
+        )
+        pages.forEach { (name, id) ->
+            findViewById<View>(id).visibility = if (name == tab) View.VISIBLE else View.GONE
+        }
+        val buttons = mapOf(
+            "home" to R.id.btnNavHome,
+            "mapping" to R.id.btnNavMapping,
+            "service" to R.id.btnNavService,
+            "tools" to R.id.btnNavTools
+        )
+        buttons.forEach { (name, id) ->
+            val button = findViewById<Button>(id)
+            button.setTextColor(ContextCompat.getColor(this,
+                if (name == tab) R.color.accent else R.color.text_sub))
+            button.paint.isFakeBoldText = name == tab
+        }
+        findViewById<android.widget.ScrollView>(R.id.contentScroll).scrollTo(0, 0)
+    }
 
-    private fun dialogQuickActions() = showPanelDialog(R.id.quickActionsPanel, "快捷功能测试")
+    private fun chooseCustomShortcutIcon() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "image/*"
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+        }
+        try {
+            startActivityForResult(intent, REQUEST_CUSTOM_ICON)
+        } catch (e: Exception) {
+            Toast.makeText(this, "无法打开图片选择器：${e.message}", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    @Deprecated("Uses the platform document picker for a launcher shortcut image")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode != REQUEST_CUSTOM_ICON || resultCode != RESULT_OK) return
+        val uri = data?.data ?: return
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.O) {
+            Toast.makeText(this, "自定义桌面快捷方式图标需要 Android 8.0 或更高版本", Toast.LENGTH_LONG).show()
+            return
+        }
+        try {
+            val bitmap = contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it) }
+                ?: throw IllegalArgumentException("无法读取所选图片")
+            val iconBitmap = centerCropBitmap(bitmap, 512)
+            val shortcutIntent = Intent(this, MainActivity::class.java).apply {
+                action = Intent.ACTION_MAIN
+                addCategory(Intent.CATEGORY_LAUNCHER)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+            val shortcut = ShortcutInfo.Builder(this, "koreader_ctrl_custom_${System.currentTimeMillis()}")
+                .setShortLabel("翻页器")
+                .setLongLabel("KOReader 翻页器")
+                .setIcon(Icon.createWithBitmap(iconBitmap))
+                .setIntent(shortcutIntent)
+                .build()
+            val manager = getSystemService(ShortcutManager::class.java)
+            if (manager != null && manager.isRequestPinShortcutSupported) {
+                manager.requestPinShortcut(shortcut, null)
+                Toast.makeText(this, "已请求添加自定义图标快捷方式，请在桌面确认", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "当前桌面启动器不支持固定快捷方式", Toast.LENGTH_LONG).show()
+            }
+        } catch (e: Exception) {
+            Log.e("MainActivity", "custom shortcut icon failed", e)
+            Toast.makeText(this, "图片处理失败：${e.message}", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun centerCropBitmap(source: Bitmap, size: Int): Bitmap {
+        val scale = maxOf(size.toFloat() / source.width, size.toFloat() / source.height)
+        val width = (source.width * scale).toInt()
+        val height = (source.height * scale).toInt()
+        val scaled = Bitmap.createScaledBitmap(source, width, height, true)
+        val x = ((width - size) / 2).coerceAtLeast(0)
+        val y = ((height - size) / 2).coerceAtLeast(0)
+        return Bitmap.createBitmap(scaled, x, y, size, size)
+    }
 
     private fun bindAction(id: Int, action: Action) {
         findViewById<Button>(id).setOnClickListener {
@@ -661,7 +731,7 @@ class MainActivity : AppCompatActivity() {
         val battery = isIgnoringBatteryOptimizations()
         txtPermStatus.text = buildString {
             append("无障碍服务：")
-            append(if (a11y) "已开启（支持后台与锁屏收键）" else "未开启（仅应用在前台时收键）")
+            append(if (a11y) "已开启（后台可收键；锁屏是否收键取决于系统输入分发）" else "未开启（仅应用在前台时收键）")
             append("\n电池优化白名单：")
             append(if (battery) "已忽略电池优化" else "未设置（建议允许后台运行）")
         }
@@ -696,5 +766,9 @@ class MainActivity : AppCompatActivity() {
         while (statusLog.childCount > 30) {
             statusLog.removeViewAt(0)
         }
+    }
+
+    companion object {
+        private const val REQUEST_CUSTOM_ICON = 2026
     }
 }

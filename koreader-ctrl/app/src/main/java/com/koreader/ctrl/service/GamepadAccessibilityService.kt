@@ -52,19 +52,23 @@ class GamepadAccessibilityService : AccessibilityService() {
         val ev = keyEvent ?: return false
         if (GamepadEngine.isSystemReservedKey(ev.keyCode)) return false
 
+        val sources = ev.source
+        val inputManager = getSystemService(INPUT_SERVICE) as android.hardware.input.InputManager
+        val deviceSources = try { inputManager.getInputDevice(ev.deviceId)?.sources ?: 0 } catch (_: Exception) { 0 }
+        val combined = sources or deviceSources
+        val isGamepadOrDpad = (combined and InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD ||
+                (combined and InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK ||
+                (combined and InputDevice.SOURCE_DPAD) == InputDevice.SOURCE_DPAD ||
+                (combined and InputDevice.SOURCE_KEYBOARD) == InputDevice.SOURCE_KEYBOARD
+
+        if (!isGamepadOrDpad) return false
+        // KEY_UP 也消费：映射捕获期间不把释放动作继续交给系统导航，
+        // 防止 D-pad 上/下被系统当作页面滚动。
+        if (ev.action == KeyEvent.ACTION_UP) return true
         if (ev.action != KeyEvent.ACTION_DOWN) return false
         if (ev.repeatCount > 0) return true
 
         val code = GamepadEngine.mapKeyEventToCode(ev) ?: return false
-
-        val sources = ev.source
-        val isGamepadOrDpad = (sources and InputDevice.SOURCE_GAMEPAD != 0) ||
-                (sources and InputDevice.SOURCE_JOYSTICK != 0) ||
-                (sources and InputDevice.SOURCE_DPAD != 0) ||
-                (sources and InputDevice.SOURCE_KEYBOARD != 0)
-
-        if (!isGamepadOrDpad) return false
-
         lastKeyEventTime = System.currentTimeMillis()
         val deviceId = ev.deviceId
 

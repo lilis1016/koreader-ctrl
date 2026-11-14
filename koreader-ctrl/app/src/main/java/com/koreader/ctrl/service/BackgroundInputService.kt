@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.os.PowerManager
 import android.util.Log
 import com.koreader.ctrl.data.Prefs
 import com.koreader.ctrl.gamepad.GamepadEngine
@@ -66,17 +67,22 @@ class BackgroundInputService : Service() {
     private var handler: Handler? = null
     private var pollRunnable: Runnable? = null
     private var receiver: BroadcastReceiver? = null
+    private var cpuWakeLock: PowerManager.WakeLock? = null
 
     private var mode: String = BackgroundModes.MODE_FOREGROUND
 
     private val screenReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             when (intent?.action) {
-                Intent.ACTION_SCREEN_ON,
-                Intent.ACTION_SCREEN_OFF,
-                BluetoothStateReceiver.ACTION_BT_CHANGED -> {
+                Intent.ACTION_SCREEN_OFF -> {
+                    setCpuAwakeForScreenOff(true)
                     updateStatus()
                 }
+                Intent.ACTION_SCREEN_ON -> {
+                    setCpuAwakeForScreenOff(false)
+                    updateStatus()
+                }
+                BluetoothStateReceiver.ACTION_BT_CHANGED -> updateStatus()
             }
         }
     }
@@ -84,6 +90,10 @@ class BackgroundInputService : Service() {
     override fun onCreate() {
         super.onCreate()
         prefs = Prefs(this)
+        // 仅在屏幕熄灭时保持 CPU 运行；屏幕点亮后立即释放，降低额外耗电。
+        // PARTIAL_WAKE_LOCK 不会点亮屏幕，也不改变锁屏状态。
+        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        if (!powerManager.isInteractive) setCpuAwakeForScreenOff(true)
         isRunning = true
         prefs.serviceRunning = true
 
@@ -101,6 +111,24 @@ class BackgroundInputService : Service() {
         registerScreenReceiver()
 
         Log.i(TAG, "service created")
+    }
+
+    private fun setCpuAwakeForScreenOff(keepAwake: Boolean) {
+        try {
+            if (keepAwake) {
+                if (cpuWakeLock?.isHeld == true) return
+                val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
+                cpuWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "$packageName:GamepadInput").apply {
+                    setReferenceCounted(false)
+                    acquire()
+                }
+            } else {
+                cpuWakeLock?.let { if (it.isHeld) it.release() }
+                cpuWakeLock = null
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "partial wake lock update failed", e)
+        }
     }
 
     private fun registerScreenReceiver() {
@@ -181,6 +209,7 @@ class BackgroundInputService : Service() {
             receiver?.let { unregisterReceiver(it) }
         } catch (_: Exception) {}
         dispatcher = null
+        setCpuAwakeForScreenOff(false)
         InputHub.setActionListener(null)
         Notifier.cancel(this)
         super.onDestroy()

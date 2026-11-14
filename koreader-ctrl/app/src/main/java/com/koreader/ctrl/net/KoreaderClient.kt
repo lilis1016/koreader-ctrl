@@ -23,7 +23,11 @@ object KoreaderClient {
     private const val PORT = 8080
     private const val TIMEOUT_MS = 4000
 
-    private val executor = Executors.newFixedThreadPool(3)
+    // KOReader 的 HTTP Inspector 对亮度增量事件是有状态的。并发 GET 可能在 Kindle 端
+    // 交错处理，表现为第一次生效、后续亮度事件丢失。统一串行发送，保持输入顺序。
+    private val executor = Executors.newSingleThreadExecutor { runnable ->
+        Thread(runnable, "koreader-http-queue").apply { isDaemon = true }
+    }
 
     fun buildUrl(ip: String, eventName: String): String {
         val clean = ip.trim()
@@ -53,7 +57,10 @@ object KoreaderClient {
             conn.connectTimeout = TIMEOUT_MS
             conn.readTimeout = TIMEOUT_MS
             conn.setRequestProperty("Connection", "close")
-            // 原 HTML 使用 cache:"no-store"
+            conn.setRequestProperty("Cache-Control", "no-cache, no-store, max-age=0")
+            conn.setRequestProperty("Pragma", "no-cache")
+            conn.setRequestProperty("Accept", "*/*")
+            // 与原 HTML 的 cache:"no-store" 对齐，避免增量事件被中间缓存复用。
             conn.useCaches = false
 
             val code = conn.responseCode
