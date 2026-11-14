@@ -23,8 +23,10 @@ jobs:
           echo "sdk.dir=$ANDROID_HOME" > local.properties
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
           
-      - name: Fix Broken Zip Configuration
-        run: sed -i '/aapt2wrap/d' gradle.properties
+      - name: Fix Broken Zip Configuration and Code Bugs
+        run: |
+          sed -i '/aapt2wrap/d' gradle.properties
+          find app/src/main/java -name "*.kt" -exec sed -i 's/“/『/g; s/”/』/g' {} +
           
       - name: Build Debug APK
         run: |
