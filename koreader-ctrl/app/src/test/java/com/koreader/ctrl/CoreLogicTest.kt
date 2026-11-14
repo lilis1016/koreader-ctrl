@@ -48,11 +48,11 @@ class CoreLogicTest {
     @Test
     fun `brightness URLs include a numeric step argument`() {
         assertEquals(
-            "http://192.168.31.114:8080/koreader/event/IncreaseFlIntensity/1",
+            "http://192.168.31.114:8080/koreader/broadcast/IncreaseFlIntensity/1",
             KoreaderClient.buildUrl("192.168.31.114", Action.INCREASE_FL.eventName)
         )
         assertEquals(
-            "http://192.168.31.114:8080/koreader/event/DecreaseFlIntensity/1",
+            "http://192.168.31.114:8080/koreader/broadcast/DecreaseFlIntensity/1",
             KoreaderClient.buildUrl("192.168.31.114", Action.DECREASE_FL.eventName)
         )
     }

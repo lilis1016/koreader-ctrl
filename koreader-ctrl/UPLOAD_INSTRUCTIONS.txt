@@ -1,0 +1,15 @@
+KOReader Controller v1.0.4 - 上传说明
+
+1. 解压 koreader-ctrl-v1.0.4.zip。
+2. 打开解压后最外层的 koreader-ctrl 文件夹。
+3. 将这个文件夹“里面的全部内容”（包括隐藏的 .github 文件夹）上传到你原来用于构建的 GitHub 项目目录，覆盖同路径文件。
+   正确的项目目录应当能直接看到：gradlew、settings.gradle.kts、build.gradle.kts、app/、.github/。
+   不要把整个 koreader-ctrl 文件夹再套进已有的项目根目录，否则会多出一层目录。
+4. 本包故意保留并覆盖旧文件 app/src/main/res/drawable/rabbit_user_icon.xml。
+   该文件现在引用 @drawable/rabbit_user_icon_bitmap，不再引用自身。
+   同时必须上传 app/src/main/res/drawable-nodpi/rabbit_user_icon_bitmap.png。
+5. 上传后可在 GitHub 打开 app/src/main/res/drawable/rabbit_user_icon.xml，确认内容中有：
+   android:src="@drawable/rabbit_user_icon_bitmap"
+   如果仍看到 @drawable/rabbit_user_icon，说明旧文件没有被覆盖或上传到了错误目录。
+
+注意：GitHub 网页上传/覆盖文件不会自动删除仓库里 ZIP 中已不存在的旧文件。因此本版用“同路径修正内容”的方式处理资源循环，而不是依赖删除文件。

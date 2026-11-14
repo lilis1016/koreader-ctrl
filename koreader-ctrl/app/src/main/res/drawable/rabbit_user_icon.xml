@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<bitmap xmlns:android="http://schemas.android.com/apk/res/android" android:src="@drawable/rabbit_user_icon" android:gravity="center" />
+<!-- The legacy resource name is intentionally retained to overwrite older repos.
+     It points to a differently named PNG to avoid a ResourceCycle. -->
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@drawable/rabbit_user_icon_bitmap"
+    android:gravity="center" />

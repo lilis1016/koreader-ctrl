@@ -1,6 +1,7 @@
 package com.koreader.ctrl.net
 
 import android.util.Log
+import android.os.SystemClock
 import com.koreader.ctrl.model.Action
 import java.io.BufferedReader
 import java.net.HttpURLConnection
@@ -10,8 +11,10 @@ import java.util.concurrent.Executors
 /**
  * KOReader HTTP Inspector 客户端。
  *
- * 协议与原始 HTML 完全一致，未做任何改动：
- *   GET http://<KINDLE_IP>:8080/koreader/event/<EventName>
+ * 通过 KOReader HTTP Inspector 发送事件：
+ *   普通事件：GET /koreader/event/<EventName>
+ *   亮度事件：GET /koreader/broadcast/<EventName>
+ * 亮度使用 broadcast，是为了让全局 DeviceListener 在其他弹层位于顶部时也能收到。
  *
  * 原 HTML 使用 fetch(mode="no-cors")，浏览器拿不到响应体。
  * 原生应用不使用 CORS，因此可以直接读取 HTTP 状态码与响应体，
@@ -21,10 +24,13 @@ object KoreaderClient {
 
     private const val TAG = "KoreaderClient"
     private const val PORT = 8080
-    private const val TIMEOUT_MS = 4000
+    private const val TIMEOUT_MS = 5000
+    private const val BRIGHTNESS_MIN_INTERVAL_MS = 180L
 
-    // KOReader 的 HTTP Inspector 对亮度增量事件是有状态的。并发 GET 可能在 Kindle 端
-    // 交错处理，表现为第一次生效、后续亮度事件丢失。统一串行发送，保持输入顺序。
+    @Volatile
+    private var lastBrightnessRequestAt = 0L
+
+    // 串行发送并对亮度事件限速，避免连续请求在 KOReader UIManager 的 nextTick 队列中挤在一起。
     private val executor = Executors.newSingleThreadExecutor { runnable ->
         Thread(runnable, "koreader-http-queue").apply { isDaemon = true }
     }
@@ -34,20 +40,34 @@ object KoreaderClient {
             .removePrefix("http://")
             .removePrefix("https://")
             .trimEnd('/')
-        return "http://$clean:$PORT/koreader/event/$eventName"
+        val endpoint = if (isBrightnessEvent(eventName)) "broadcast" else "event"
+        return "http://$clean:$PORT/koreader/$endpoint/$eventName"
     }
 
-    /** 异步发送，返回回调在后台线程触发 */
+    private fun isBrightnessEvent(eventName: String): Boolean =
+        eventName.startsWith("IncreaseFlIntensity/") ||
+            eventName.startsWith("DecreaseFlIntensity/")
+
+    /** 异步发送：全局单线程队列，亮度事件额外留出 UIManager 处理间隔。 */
     fun sendAsync(ip: String, eventName: String, onResult: (Boolean, String) -> Unit) {
         executor.execute {
             val (ok, msg) = send(ip, eventName)
-            onResult(ok, msg)
+            try { onResult(ok, msg) } catch (e: Exception) {
+                Log.w(TAG, "result callback failed", e)
+            }
         }
     }
 
     /** 同步发送，返回 (是否成功, 描述信息) */
     fun send(ip: String, eventName: String): Pair<Boolean, String> {
         if (ip.isBlank()) return false to "IP 为空"
+
+        if (isBrightnessEvent(eventName)) {
+            val now = SystemClock.elapsedRealtime()
+            val waitMs = (BRIGHTNESS_MIN_INTERVAL_MS - (now - lastBrightnessRequestAt)).coerceAtLeast(0L)
+            if (waitMs > 0L) SystemClock.sleep(waitMs)
+            lastBrightnessRequestAt = SystemClock.elapsedRealtime()
+        }
 
         val url = buildUrl(ip, eventName)
         var conn: HttpURLConnection? = null
