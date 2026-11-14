@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/text_main"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="14dp"
+            android:text="蓝牙游戏手柄 → Android 手机 → Kindle"
+            android:textColor="@color/text_sub"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_panel"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/txtBtStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="蓝牙状态：检测中…"
+                android:textColor="@color/text_main"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtDevice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="手柄状态：检测中…"
+                android:textColor="@color/text_main"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/text_sub"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@color/divider" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="@string/label_ip"
+                android:textColor="@color/text_sub"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/inputIp"
+                    android:layout_width="0dp"
+                    android:layout_height="42dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_input"
+                    android:fontFamily="monospace"
+                    android:hint="192.168.31.114"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textSize="15sp" />
+
+                <Button
+                    android:id="@+id/btnTest"
+                    style="@style/ChipButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/btn_test" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtIpStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="输入 Kindle IP 后可点击测试连接"
+                android:textColor="@color/text_sub"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="按键映射配置"
+                android:textColor="@color/text_main"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnResetDefault"
+                style="@style/ChipButton"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="@string/btn_reset_default" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/captureBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_chip_active"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/txtCapturePrompt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="请按下游戏手柄上的按键…"
+                android:textColor="@color/panel"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnCancelCapture"
+                style="@style/ChipButton"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="@string/cancel" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_panel"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="点击任意功能项即可绑定实体按键（全局唯一映射：绑定重复按键将自动解除旧绑定）"
+                android:textColor="@color/text_sub"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:id="@+id/mapContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/divider" />
+
+            <TextView
+                android:id="@+id/txtPreset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_sub"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnNewPreset"
+                    style="@style/ChipButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:text="@string/btn_new_preset" />
+
+                <Button
+                    android:id="@+id/btnRenamePreset"
+                    style="@style/ChipButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="6dp"
+                    android:text="@string/btn_rename_preset" />
+
+                <Button
+                    android:id="@+id/btnDeletePreset"
+                    style="@style/ChipButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="6dp"
+                    android:text="@string/btn_delete_preset" />
+
+                <Button
+                    android:id="@+id/btnAssignPreset"
+                    style="@style/ChipButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="6dp"
+                    android:text="@string/btn_assign" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            style="@style/SectionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_service" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_panel"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnService"
+                    style="@style/ChipButton"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="@string/btn_start_service" />
+
+                <Button
+                    android:id="@+id/btnPerm"
+                    style="@style/ChipButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/btn_perm" />
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/chkAutoStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="开机自动启动后台服务"
+                android:textColor="@color/text_main"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/txtPermStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/text_sub"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/SectionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="功能指令快捷触发（点击直接测试向 Kindle 发送）" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_panel"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnPrev"
+                    style="@style/ActionButton"
+                    android:layout_height="44dp"
+                    android:text="@string/btn_prev" />
+
+                <Button
+                    android:id="@+id/btnNext"
+                    style="@style/ActionButton"
+                    android:layout_height="44dp"
+                    android:text="@string/btn_next" />
+
+                <Button
+                    android:id="@+id/btnBack"
+                    style="@style/ActionButton"
+                    android:layout_height="44dp"
+                    android:text="@string/btn_back" />
+
+                <Button
+                    android:id="@+id/btnConfirm"
+                    style="@style/ActionButton"
+                    android:layout_height="44dp"
+                    android:text="@string/btn_confirm" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnFlInc"
+                    style="@style/ActionButton"
+                    android:layout_height="44dp"
+                    android:text="@string/btn_fl_inc" />
+
+                <Button
+                    android:id="@+id/btnFlDec"
+                    style="@style/ActionButton"
+                    android:layout_height="44dp"
+                    android:text="@string/btn_fl_dec" />
+
+                <Button
+                    android:id="@+id/btnRefresh"
+                    style="@style/ActionButton"
+                    android:layout_height="44dp"
+                    android:text="@string/btn_refresh" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnNight"
+                    style="@style/ActionButton"
+                    android:layout_height="44dp"
+                    android:text="@string/btn_night" />
+
+                <Button
+                    android:id="@+id/btnScreenshot"
+                    style="@style/ActionButton"
+                    android:layout_height="44dp"
+                    android:text="@string/btn_screenshot" />
+
+                <Button
+                    android:id="@+id/btnGames"
+                    style="@style/ActionButton"
+                    android:layout_height="44dp"
+                    android:text="@string/btn_games" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtGamesNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/text_sub"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/statusLog"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/bg_panel"
+            android:orientation="vertical"
+            android:padding="12dp" />
+    </LinearLayout>
+</ScrollView>
