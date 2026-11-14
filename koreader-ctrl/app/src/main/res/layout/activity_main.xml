@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 标题 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/accent"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <!-- IP -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_panel"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_ip"
+                android:textColor="@color/text_sub"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/inputIp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_input"
+                android:fontFamily="monospace"
+                android:hint="192.168.31.114"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:padding="12dp"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnTest"
+                    style="@style/ChipButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:text="@string/btn_test" />
+
+                <TextView
+                    android:id="@+id/txtIpStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/text_sub"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 翻页与导航 -->
+        <TextView
+            style="@style/SectionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_nav" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_panel"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnPrev"
+                    style="@style/ActionButton"
+                    android:layout_height="56dp"
+                    android:text="@string/btn_prev" />
+
+                <Button
+                    android:id="@+id/btnNext"
+                    style="@style/ActionButton"
+                    android:layout_height="56dp"
+                    android:text="@string/btn_next" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnBack"
+                    style="@style/ActionButton"
+                    android:text="@string/btn_back" />
+
+                <Button
+                    android:id="@+id/btnConfirm"
+                    style="@style/ActionButton"
+                    android:text="@string/btn_confirm" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 屏幕控制 -->
+        <TextView
+            style="@style/SectionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_screen" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_panel"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnNight"
+                    style="@style/ActionButton"
+                    android:text="@string/btn_night" />
+
+                <Button
+                    android:id="@+id/btnRefresh"
+                    style="@style/ActionButton"
+                    android:text="@string/btn_refresh" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnFlInc"
+                    style="@style/ActionButton"
+                    android:text="@string/btn_fl_inc" />
+
+                <Button
+                    android:id="@+id/btnFlDec"
+                    style="@style/ActionButton"
+                    android:text="@string/btn_fl_dec" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnScreenshot"
+                    style="@style/ActionButton"
+                    android:text="@string/btn_screenshot" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 游戏快捷入口 -->
+        <TextView
+            style="@style/SectionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_games" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_panel"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/btnGames"
+                style="@style/ActionButton"
+                android:layout_width="match_parent"
+                android:text="@string/btn_games" />
+
+            <TextView
+                android:id="@+id/txtGamesNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/text_sub"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <!-- 手柄管理 -->
+        <TextView
+            style="@style/SectionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_pads" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_panel"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/txtDevice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_main"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/txtPreset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/text_main"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/txtMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/text_sub"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnNewPreset"
+                    style="@style/ChipButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:text="@string/btn_new_preset" />
+
+                <Button
+                    android:id="@+id/btnRenamePreset"
+                    style="@style/ChipButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/btn_rename_preset" />
+
+                <Button
+                    android:id="@+id/btnDeletePreset"
+                    style="@style/ChipButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/btn_delete_preset" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnAssignPreset"
+                style="@style/ChipButton"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/btn_assign" />
+
+            <!-- 映射编辑区 -->
+            <LinearLayout
+                android:id="@+id/mapContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <!-- 后台服务 -->
+        <TextView
+            style="@style/SectionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_service" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_panel"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnService"
+                    style="@style/ChipButton"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_weight="1"
+                    android:text="@string/btn_start_service" />
+
+                <Button
+                    android:id="@+id/btnPerm"
+                    style="@style/ChipButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/btn_perm" />
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/chkAutoStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="开机自动启动服务"
+                android:textColor="@color/text_main"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/txtPermStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/text_sub"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <!-- 日志 -->
+        <LinearLayout
+            android:id="@+id/statusLog"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/bg_panel"
+            android:orientation="vertical"
+            android:padding="12dp" />
+    </LinearLayout>
+</ScrollView>
