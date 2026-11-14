@@ -135,6 +135,8 @@ class MainActivity : AppCompatActivity() {
         bindAction(R.id.btnScreenshot, Action.SCREENSHOT)
         bindAction(R.id.btnGames, Action.GAME_HALL)
 
+        findViewById<Button>(R.id.btnOpenMapping).setOnClickListener { dialogMapping() }
+        findViewById<Button>(R.id.btnOpenQuickActions).setOnClickListener { dialogQuickActions() }
         findViewById<Button>(R.id.btnResetDefault).setOnClickListener { confirmResetDefault() }
         findViewById<Button>(R.id.btnCancelCapture).setOnClickListener {
             capturing = null
@@ -180,6 +182,35 @@ class MainActivity : AppCompatActivity() {
 
         BluetoothStateReceiver.onChanged = { runOnUiThread { refreshPads() } }
     }
+
+
+    private fun showPanelDialog(panelId: Int, title: String) {
+        val panel = findViewById<LinearLayout>(panelId)
+        val parent = panel.parent as? ViewGroup ?: return
+        val originalIndex = parent.indexOfChild(panel)
+        parent.removeView(panel)
+        panel.visibility = View.VISIBLE
+        val scroll = android.widget.ScrollView(this).apply {
+            isFillViewport = true
+            addView(panel)
+        }
+        val dialog = AlertDialog.Builder(this)
+            .setTitle(title)
+            .setView(scroll)
+            .setNegativeButton(R.string.cancel, null)
+            .create()
+        dialog.setOnDismissListener {
+            (panel.parent as? ViewGroup)?.removeView(panel)
+            parent.addView(panel, originalIndex)
+            panel.visibility = View.GONE
+            renderMap()
+        }
+        dialog.show()
+    }
+
+    private fun dialogMapping() = showPanelDialog(R.id.mappingPanel, "按键映射配置")
+
+    private fun dialogQuickActions() = showPanelDialog(R.id.quickActionsPanel, "快捷功能测试")
 
     private fun bindAction(id: Int, action: Action) {
         findViewById<Button>(id).setOnClickListener {
@@ -422,9 +453,13 @@ class MainActivity : AppCompatActivity() {
                 if (boundCode == null && !isWaitingThis) R.drawable.bg_chip else R.drawable.bg_chip_active
             )
             textSize = 12f
-            minHeight = 36
+            minHeight = 40
             minWidth = 108
-            setPadding(20, 0, 20, 0)
+            maxWidth = (resources.displayMetrics.density * 164).toInt()
+            isSingleLine = false
+            maxLines = 2
+            setHorizontallyScrolling(false)
+            setPadding(10, 4, 10, 4)
             layoutParams = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
             )

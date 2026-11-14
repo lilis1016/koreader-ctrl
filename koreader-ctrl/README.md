@@ -8,6 +8,14 @@ HTTP Inspector 发送翻页 / 亮度 / 日夜模式等指令。
 
 ---
 
+## 版本 1.0.1 修复
+
+- 补齐无障碍服务的 `canRequestFilterKeyEvents` 能力声明，修复部分设备无障碍已开启但后台手柄按键没有进入 `onKeyEvent` 的问题。
+- 亮度增减事件补上 HTTP Inspector 所需的数值参数 `/1`，避免无参数触发 KOReader 增量事件处理异常。
+- 整理无障碍输入分发，服务启动瞬间提供安全回退路径，并避免同一次按键被两条分发路径重复发送。
+- 映射编辑和快捷测试改为独立滚动弹窗；按键标签允许换行，避免长名称被裁切。
+- 更新为极简兔子图标。
+
 ## 一、协议（与原 HTML 逐字一致）
 
 ```
@@ -28,8 +36,8 @@ GET http://<KINDLE_IP>:8080/koreader/event/<EventName>
 | 返回 / 退出 | `Close` | uimanager.lua:89,114（UIManager 广播） |
 | 确认 / 菜单 | `ShowMenu` | dispatcher.lua:82 |
 | 切换日/夜模式 | `ToggleNightMode` | dispatcher.lua:139 |
-| 亮度增加 | `IncreaseFlIntensity` | dispatcher.lua:134 |
-| 亮度减少 | `DecreaseFlIntensity` | dispatcher.lua:135 |
+| 亮度增加 | `IncreaseFlIntensity/1` | dispatcher.lua:134（增量事件需要数值参数） |
+| 亮度减少 | `DecreaseFlIntensity/1` | dispatcher.lua:135（增量事件需要数值参数） |
 | 全屏刷新 | `FullRefresh` | dispatcher.lua:142 |
 | 截屏 | `Screenshot` | dispatcher.lua:87 |
 
@@ -69,7 +77,7 @@ HTTP Inspector 的 `getVariablesFromUri`（main.lua:324）以 `/` 分隔参数�
 |---|---|---|
 | **Activity 窗口事件分发** | App 在前台时可接收按键与摇杆输入 | 否 |
 | **Foreground Service** | 保持服务运行、常驻通知并刷新设备列表；它本身不能读取其它 App 的输入 | Android 12+ 启动连接设备类型服务前需授予蓝牙连接权限 |
-| **AccessibilityService** `onKeyEvent` | 在其它 App 前台或部分锁屏场景下接收按键；不保证所有 ROM 都转发手柄事件，也不接收摇杆轴 | 是，需在「设置 → 无障碍」手动开启 |
+| **AccessibilityService** `onKeyEvent` | 在其它 App 前台或部分锁屏场景下接收按键；不保证所有 ROM 都转发手柄事件，也不接收摇杆轴 | 是，需在「设置 → 无障碍」手动开启；服务声明已显式请求按键过滤能力 |
 
 ### 为什么不只有一个「后台监听」开关
 

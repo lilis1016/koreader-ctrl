@@ -27,10 +27,14 @@ object InputHub {
     }
 
     fun dispatchInput(deviceId: Int, code: String) {
-        val consumedByCapture = captureListener?.invoke(deviceId, code) == true
-        if (!consumedByCapture) {
-            actionListener?.invoke(deviceId, code)
-        }
+        if (!dispatchInputForCapture(deviceId, code)) dispatchInputToAction(deviceId, code)
+    }
+
+    fun dispatchInputForCapture(deviceId: Int, code: String): Boolean =
+        captureListener?.invoke(deviceId, code) == true
+
+    fun dispatchInputToAction(deviceId: Int, code: String) {
+        actionListener?.invoke(deviceId, code)
     }
 
     fun currentPads(): List<GamepadInfo> = pads

@@ -17,8 +17,8 @@ class CoreLogicTest {
         assertEquals("GotoViewRel/1", Action.NEXT_PAGE.eventName)
         assertEquals("Close", Action.BACK.eventName)
         assertEquals("ShowMenu", Action.CONFIRM.eventName)
-        assertEquals("IncreaseFlIntensity", Action.INCREASE_FL.eventName)
-        assertEquals("DecreaseFlIntensity", Action.DECREASE_FL.eventName)
+        assertEquals("IncreaseFlIntensity/1", Action.INCREASE_FL.eventName)
+        assertEquals("DecreaseFlIntensity/1", Action.DECREASE_FL.eventName)
         assertEquals("FullRefresh", Action.FULL_REFRESH.eventName)
         assertEquals("ToggleNightMode", Action.TOGGLE_NIGHT_MODE.eventName)
         assertEquals("Screenshot", Action.SCREENSHOT.eventName)
@@ -42,6 +42,18 @@ class CoreLogicTest {
         assertEquals(
             "http://192.168.31.114:8080/koreader/event/GotoViewRel/1",
             KoreaderClient.buildUrl("192.168.31.114", "GotoViewRel/1")
+        )
+    }
+
+    @Test
+    fun `brightness URLs include a numeric step argument`() {
+        assertEquals(
+            "http://192.168.31.114:8080/koreader/event/IncreaseFlIntensity/1",
+            KoreaderClient.buildUrl("192.168.31.114", Action.INCREASE_FL.eventName)
+        )
+        assertEquals(
+            "http://192.168.31.114:8080/koreader/event/DecreaseFlIntensity/1",
+            KoreaderClient.buildUrl("192.168.31.114", Action.DECREASE_FL.eventName)
         )
     }
 

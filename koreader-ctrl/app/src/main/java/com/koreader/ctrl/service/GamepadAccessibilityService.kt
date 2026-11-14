@@ -69,9 +69,15 @@ class GamepadAccessibilityService : AccessibilityService() {
         val deviceId = ev.deviceId
 
         Log.i(TAG, "gamepad key: device=$deviceId code=$code")
-        InputHub.dispatchInput(deviceId, code)
-        if (!BackgroundInputService.isRunning) {
-            BackgroundInputService.dispatcher?.handleInput(deviceId, code)
+        // One input path only: capture has priority while the app is configuring mappings;
+        // otherwise route to the foreground service, with a safe fallback during startup.
+        val captureConsumed = InputHub.dispatchInputForCapture(deviceId, code)
+        if (!captureConsumed) {
+            if (BackgroundInputService.isRunning) {
+                InputHub.dispatchInputToAction(deviceId, code)
+            } else {
+                ActionDispatcher(applicationContext).handleInput(deviceId, code)
+            }
         }
         return true
     }

@@ -1,95 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="108dp"
-    android:height="108dp"
-    android:viewportWidth="108"
-    android:viewportHeight="108">
-
-    <!-- 左侧长兔耳外轮廓 -->
-    <path
-        android:fillColor="#FFFFFF"
-        android:strokeColor="#4A3B32"
-        android:strokeWidth="2.4"
-        android:pathData="M43,46 C36,33 36,22 41,21 C46,20 50,31 50,45 Z" />
-    <!-- 左侧长兔耳粉色内耳 -->
-    <path
-        android:fillColor="#FFB5C2"
-        android:pathData="M43.5,42 C39.5,33 39.5,25.5 42,25 C44.5,24.5 47,32 47.5,42 Z" />
-
-    <!-- 右侧长兔耳外轮廓 -->
-    <path
-        android:fillColor="#FFFFFF"
-        android:strokeColor="#4A3B32"
-        android:strokeWidth="2.4"
-        android:pathData="M65,46 C72,33 72,22 67,21 C62,20 58,31 58,45 Z" />
-    <!-- 右侧长兔耳粉色内耳 -->
-    <path
-        android:fillColor="#FFB5C2"
-        android:pathData="M64.5,42 C68.5,33 68.5,25.5 66,25 C63.5,24.5 61,32 60.5,42 Z" />
-
-    <!-- 垂耳/蓬松头顶绒毛 -->
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M51,42 Q54,37 57,42 Z" />
-
-    <!-- 圆润可爱的小兔子脸蛋 -->
-    <path
-        android:fillColor="#FFFFFF"
-        android:strokeColor="#4A3B32"
-        android:strokeWidth="2.4"
-        android:pathData="M54,42 C39,42 31,51 31,62 C31,73 41,80 54,80 C67,80 77,73 77,62 C77,51 69,42 54,42 Z" />
-
-    <!-- 左边粉嫩腮红 -->
-    <path
-        android:fillColor="#FF9EB0"
-        android:fillAlpha="0.65"
-        android:pathData="M39,65m-4.2,0a4.2,2.8 0 1,0 8.4,0a4.2,2.8 0 1,0 -8.4,0" />
-    <!-- 右边粉嫩腮红 -->
-    <path
-        android:fillColor="#FF9EB0"
-        android:fillAlpha="0.65"
-        android:pathData="M69,65m-4.2,0a4.2,2.8 0 1,0 8.4,0a4.2,2.8 0 1,0 -8.4,0" />
-
-    <!-- 左眼（圆溜溜黑眼睛） -->
-    <path
-        android:fillColor="#3D2E27"
-        android:pathData="M44.5,58.5m-3,0a3,3.3 0 1,0 6,0a3,3.3 0 1,0 -6,0" />
-    <!-- 左眼高光 -->
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M43.5,57.2m-1.1,0a1.1,1.1 0 1,0 2.2,0a1.1,1.1 0 1,0 -2.2,0" />
-
-    <!-- 右眼（圆溜溜黑眼睛） -->
-    <path
-        android:fillColor="#3D2E27"
-        android:pathData="M63.5,58.5m-3,0a3,3.3 0 1,0 6,0a3,3.3 0 1,0 -6,0" />
-    <!-- 右眼高光 -->
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M62.5,57.2m-1.1,0a1.1,1.1 0 1,0 2.2,0a1.1,1.1 0 1,0 -2.2,0" />
-
-    <!-- 粉色小三角鼻子 -->
-    <path
-        android:fillColor="#FF7A93"
-        android:pathData="M52,63.5 Q54,62.5 56,63.5 Q54,66.2 52,63.5 Z" />
-
-    <!-- 可爱三瓣嘴 -->
-    <path
-        android:strokeColor="#4A3B32"
-        android:strokeWidth="2.0"
-        android:strokeLineCap="round"
-        android:fillColor="@android:color/transparent"
-        android:pathData="M54,65.5 L54,68 M49.5,68.5 Q52,71 54,68 Q56,71 58.5,68.5" />
-
-    <!-- 底部迷你翻页小书本徽章 -->
-    <path
-        android:fillColor="#FFE0B2"
-        android:strokeColor="#4A3B32"
-        android:strokeWidth="1.8"
-        android:pathData="M43,75 L54,73 L54,83 L43,85 Z" />
-    <path
-        android:fillColor="#FFF8E7"
-        android:strokeColor="#4A3B32"
-        android:strokeWidth="1.8"
-        android:pathData="M65,75 L54,73 L54,83 L65,85 Z" />
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- clean, calm rabbit silhouette -->
+    <path android:fillColor="#252A2A" android:pathData="M37,49 C29,35 27,13 34,12 C42,11 47,31 49,44 C52,42 56,42 59,44 C62,29 68,10 76,13 C83,16 77,37 69,50 C77,57 80,67 77,77 C73,89 62,95 51,94 C38,93 29,84 29,72 C29,62 32,54 37,49 Z" />
+    <path android:fillColor="#F4F1EA" android:pathData="M36,41 C32,29 32,18 35,18 C39,18 43,34 44,44 Z M68,44 C71,32 76,18 78,19 C81,21 76,34 72,43 Z" />
+    <path android:fillColor="#F4F1EA" android:pathData="M42,65a2.2,2.8 0,1 0,4.4 0a2.2,2.8 0,1 0,-4.4 0 M61,65a2.2,2.8 0,1 0,4.4 0a2.2,2.8 0,1 0,-4.4 0" />
+    <path android:fillColor="#C78D83" android:pathData="M51,72 Q54,69 57,72 Q54,76 51,72 Z" />
 </vector>
