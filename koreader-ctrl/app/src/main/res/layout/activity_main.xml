@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="@color/bg">
+
+    <ScrollView android:id="@+id/contentScroll" android:layout_width="match_parent"
+        android:layout_height="0dp" android:layout_weight="1" android:fillViewport="true"
+        android:clipToPadding="false" android:background="@color/bg">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:paddingStart="18dp" android:paddingEnd="18dp"
+            android:paddingTop="20dp" android:paddingBottom="22dp">
+
+            <!-- HOME -->
+            <LinearLayout android:id="@+id/pageHome" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="vertical">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical">
+                    <ImageView android:layout_width="76dp" android:layout_height="76dp"
+                        android:padding="2dp" android:background="@drawable/bg_logo_tile"
+                        android:src="@drawable/rabbit_user_icon_bitmap" android:scaleType="fitCenter"
+                        android:contentDescription="兔子应用图标" />
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical" android:paddingStart="14dp">
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:text="KOReader Controller" android:textColor="@color/text_main"
+                            android:textSize="21sp" android:textStyle="bold" />
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp" android:text="用手柄，优雅掌控阅读"
+                            android:textColor="@color/text_sub" android:textSize="13sp" />
+                        <TextView android:id="@+id/txtBtStatus" android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:layout_marginTop="8dp"
+                            android:text="蓝牙状态：检测中…" android:textColor="@color/ok"
+                            android:textSize="12sp" android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView style="@style/SectionTitle" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:text="设备连接" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:background="@drawable/bg_panel" android:orientation="vertical" android:padding="16dp">
+                    <TextView android:id="@+id/txtDevice" android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:text="手柄状态：检测中…"
+                        android:textColor="@color/text_main" android:textSize="15sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/txtMode" android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:layout_marginTop="4dp"
+                        android:textColor="@color/text_sub" android:textSize="12sp" />
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:layout_marginTop="13dp" android:layout_marginBottom="12dp" android:background="@color/divider" />
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Kindle 局域网地址" android:textColor="@color/text_sub" android:textSize="12sp" />
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp" android:orientation="horizontal" android:gravity="center_vertical">
+                        <EditText android:id="@+id/inputIp" android:layout_width="0dp" android:layout_height="46dp"
+                            android:layout_weight="1" android:background="@drawable/bg_input" android:fontFamily="monospace"
+                            android:hint="192.168.31.114" android:importantForAutofill="no" android:inputType="text"
+                            android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp" />
+                        <Button android:id="@+id/btnTest" style="@style/ChipButton"
+                            android:layout_width="wrap_content" android:layout_height="46dp"
+                            android:layout_marginStart="8dp" android:text="测试连接" />
+                    </LinearLayout>
+                    <TextView android:id="@+id/txtIpStatus" android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:layout_marginTop="7dp"
+                        android:text="输入 Kindle IP 后可点击测试连接" android:textColor="@color/text_sub" android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView style="@style/SectionTitle" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:text="快捷操作" />
+                <LinearLayout android:id="@+id/quickActionsPanel" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:background="@drawable/bg_panel"
+                    android:orientation="vertical" android:padding="10dp">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                        <Button android:id="@+id/btnPrev" style="@style/ActionButton" android:text="上一页" />
+                        <Button android:id="@+id/btnNext" style="@style/ActionButton" android:text="下一页" />
+                        <Button android:id="@+id/btnBack" style="@style/ActionButton" android:text="返回" />
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                        <Button android:id="@+id/btnConfirm" style="@style/ActionButton" android:text="确认" />
+                        <Button android:id="@+id/btnFlInc" style="@style/ActionButton" android:text="亮度 +" />
+                        <Button android:id="@+id/btnFlDec" style="@style/ActionButton" android:text="亮度 −" />
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                        <Button android:id="@+id/btnRefresh" style="@style/ActionButton" android:text="全屏刷新" />
+                        <Button android:id="@+id/btnNight" style="@style/ActionButton" android:text="日夜模式" />
+                        <Button android:id="@+id/btnScreenshot" style="@style/ActionButton" android:text="截屏" />
+                    </LinearLayout>
+                    <Button android:id="@+id/btnGames" style="@style/ActionButton"
+                        android:layout_width="match_parent" android:layout_height="48dp" android:layout_weight="0"
+                        android:text="游戏大厅" />
+                    <TextView android:id="@+id/txtGamesNote" android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:layout_marginTop="7dp"
+                        android:paddingStart="6dp" android:paddingEnd="6dp"
+                        android:textColor="@color/text_sub" android:textSize="11sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- KEY MAPPING -->
+            <LinearLayout android:id="@+id/pageMapping" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone">
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="按键映射" android:textColor="@color/text_main" android:textSize="23sp" android:textStyle="bold" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" android:text="选择一个按键进行映射，点击绑定框后按下手柄实体按键。"
+                    android:textColor="@color/text_sub" android:textSize="12sp" />
+                <LinearLayout android:id="@+id/captureBanner" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_marginTop="14dp" android:background="@drawable/bg_chip_active"
+                    android:gravity="center_vertical" android:orientation="horizontal" android:padding="12dp" android:visibility="gone">
+                    <TextView android:id="@+id/txtCapturePrompt" android:layout_width="0dp"
+                        android:layout_height="wrap_content" android:layout_weight="1" android:text="请按下游戏手柄上的按键…"
+                        android:textColor="@color/panel" android:textSize="13sp" android:textStyle="bold" />
+                    <Button android:id="@+id/btnCancelCapture" style="@style/ChipButton"
+                        android:layout_width="wrap_content" android:layout_height="34dp" android:text="取消" />
+                </LinearLayout>
+                <TextView style="@style/SectionTitle" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:text="映射列表" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:background="@drawable/bg_panel" android:orientation="vertical" android:padding="10dp">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="center_vertical">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                            android:text="按键与功能" android:textColor="@color/text_main" android:textSize="14sp" android:textStyle="bold" />
+                        <Button android:id="@+id/btnResetDefault" style="@style/ChipButton"
+                            android:layout_width="wrap_content" android:layout_height="34dp" android:text="恢复默认" />
+                    </LinearLayout>
+                    <LinearLayout android:id="@+id/mapContainer" android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:layout_marginTop="7dp" android:orientation="vertical" />
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:layout_marginTop="10dp" android:layout_marginBottom="10dp" android:background="@color/divider" />
+                    <TextView android:id="@+id/txtPreset" android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:textColor="@color/text_sub" android:textSize="12sp" />
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp" android:orientation="horizontal">
+                        <Button android:id="@+id/btnNewPreset" style="@style/ChipButton" android:layout_width="0dp"
+                            android:layout_height="38dp" android:layout_weight="1" android:text="新建预设" />
+                        <Button android:id="@+id/btnRenamePreset" style="@style/ChipButton" android:layout_width="0dp"
+                            android:layout_height="38dp" android:layout_marginStart="6dp" android:layout_weight="1" android:text="重命名" />
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp" android:orientation="horizontal">
+                        <Button android:id="@+id/btnDeletePreset" style="@style/ChipButton" android:layout_width="0dp"
+                            android:layout_height="38dp" android:layout_weight="1" android:text="删除预设" />
+                        <Button android:id="@+id/btnAssignPreset" style="@style/ChipButton" android:layout_width="0dp"
+                            android:layout_height="38dp" android:layout_marginStart="6dp" android:layout_weight="1" android:text="分配手柄" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- BACKGROUND SERVICE -->
+            <LinearLayout android:id="@+id/pageService" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone">
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="后台服务" android:textColor="@color/text_main" android:textSize="23sp" android:textStyle="bold" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" android:text="保持手柄监听与 Kindle 连接，让翻页控制在应用后台继续工作。"
+                    android:textColor="@color/text_sub" android:textSize="12sp" />
+                <TextView style="@style/SectionTitle" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:text="运行状态" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:background="@drawable/bg_panel" android:orientation="vertical" android:padding="16dp">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                        <Button android:id="@+id/btnService" style="@style/ChipButton" android:layout_width="0dp"
+                            android:layout_height="46dp" android:layout_weight="1" android:text="启动后台服务" />
+                        <Button android:id="@+id/btnPerm" style="@style/ChipButton" android:layout_width="wrap_content"
+                            android:layout_height="46dp" android:layout_marginStart="8dp" android:text="无障碍权限" />
+                    </LinearLayout>
+                    <CheckBox android:id="@+id/chkAutoStart" android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:layout_marginTop="14dp"
+                        android:buttonTint="@color/accent" android:text="开机自动启动后台服务"
+                        android:textColor="@color/text_main" android:textSize="13sp" />
+                    <TextView android:id="@+id/txtPermStatus" android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:layout_marginTop="8dp"
+                        android:textColor="@color/text_sub" android:textSize="12sp" />
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:layout_marginTop="14dp" android:layout_marginBottom="12dp" android:background="@color/divider" />
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="息屏说明" android:textColor="@color/text_main" android:textSize="14sp" android:textStyle="bold" />
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="服务会在屏幕关闭时申请 CPU 部分唤醒锁，不主动点亮屏幕。蓝牙手柄按键是否唤醒手机屏幕由 Android 系统和手柄 HID 唤醒策略决定，普通应用无法强制屏蔽系统唤醒。"
+                        android:textColor="@color/text_sub" android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- SETTINGS / TOOLS -->
+            <LinearLayout android:id="@+id/pageTools" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone">
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="设置" android:textColor="@color/text_main" android:textSize="23sp" android:textStyle="bold" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" android:text="外观、图标与运行记录"
+                    android:textColor="@color/text_sub" android:textSize="12sp" />
+                <TextView style="@style/SectionTitle" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:text="应用图标" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:background="@drawable/bg_panel" android:orientation="vertical" android:padding="16dp">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="center_vertical">
+                        <ImageView android:layout_width="78dp" android:layout_height="78dp"
+                            android:background="@drawable/bg_logo_tile" android:padding="3dp"
+                            android:src="@drawable/rabbit_user_icon_bitmap" android:scaleType="fitCenter"
+                            android:contentDescription="当前兔子图标" />
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:orientation="vertical" android:paddingStart="14dp">
+                            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                                android:text="当前应用图标" android:textColor="@color/text_main" android:textSize="15sp" android:textStyle="bold" />
+                            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp" android:text="已使用你提供的完整兔子图片"
+                                android:textColor="@color/text_sub" android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <Button android:id="@+id/btnChooseIcon" style="@style/ChipButton"
+                        android:layout_width="match_parent" android:layout_height="46dp"
+                        android:layout_marginTop="14dp" android:text="选择图片并创建桌面快捷方式" />
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp" android:text="自定义快捷方式会完整保留图片边缘，不进行居中裁切。应用 APK 图标已默认使用当前兔子图片。"
+                        android:textColor="@color/text_sub" android:textSize="11sp" />
+                </LinearLayout>
+                <TextView style="@style/SectionTitle" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:text="运行记录" />
+                <LinearLayout android:id="@+id/statusLog" android:layout_width="match_parent"
+                    android:layout_height="180dp" android:background="@drawable/bg_panel"
+                    android:orientation="vertical" android:padding="12dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider" />
+    <LinearLayout android:id="@+id/bottomNavigation" android:layout_width="match_parent"
+        android:layout_height="70dp" android:orientation="horizontal" android:gravity="center"
+        android:background="@color/panel" android:elevation="10dp" android:paddingStart="8dp" android:paddingEnd="8dp">
+        <Button android:id="@+id/btnNavHome" android:layout_width="0dp" android:layout_height="58dp"
+            android:layout_weight="1" android:minWidth="0dp" android:minHeight="0dp"
+            android:insetTop="0dp" android:insetBottom="0dp" android:text="⌂&#10;首页"
+            android:textAllCaps="false" android:textSize="12sp" android:background="@drawable/bg_nav_selected"
+            android:fontFamily="sans" android:textColor="@color/accent" android:gravity="center" />
+        <Button android:id="@+id/btnNavMapping" android:layout_width="0dp" android:layout_height="58dp"
+            android:layout_weight="1" android:minWidth="0dp" android:minHeight="0dp"
+            android:insetTop="0dp" android:insetBottom="0dp" android:text="⌘&#10;映射"
+            android:textAllCaps="false" android:textSize="12sp" android:background="@android:color/transparent"
+            android:fontFamily="sans" android:textColor="@color/text_sub" android:gravity="center" />
+        <Button android:id="@+id/btnNavService" android:layout_width="0dp" android:layout_height="58dp"
+            android:layout_weight="1" android:minWidth="0dp" android:minHeight="0dp"
+            android:insetTop="0dp" android:insetBottom="0dp" android:text="◉&#10;后台"
+            android:textAllCaps="false" android:textSize="12sp" android:background="@android:color/transparent"
+            android:fontFamily="sans" android:textColor="@color/text_sub" android:gravity="center" />
+        <Button android:id="@+id/btnNavTools" android:layout_width="0dp" android:layout_height="58dp"
+            android:layout_weight="1" android:minWidth="0dp" android:minHeight="0dp"
+            android:insetTop="0dp" android:insetBottom="0dp" android:text="⚙&#10;设置"
+            android:textAllCaps="false" android:textSize="12sp" android:background="@android:color/transparent"
+            android:fontFamily="sans" android:textColor="@color/text_sub" android:gravity="center" />
+    </LinearLayout>
+</LinearLayout>

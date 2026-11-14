@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Monochrome rabbit silhouette traced from the user's supplied rabbit artwork.
+     Android notification small icons must be single-colour transparent glyphs. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+    <path android:fillColor="#FFFFFFFF" android:pathData="M7.85,1.21 L7.28,1.76 L6.58,3.10 L6.15,4.48 L5.89,6.08 L5.87,7.73 L6.01,8.90 L6.42,10.57 L6.82,11.50 L5.94,12.07 L4.94,13.00 L4.34,13.84 L3.86,14.82 L3.53,16.06 L3.46,17.58 L3.60,18.63 L3.89,19.52 L4.60,20.69 L5.65,21.59 L7.04,22.26 L8.78,22.71 L11.33,22.98 L13.38,22.95 L15.87,22.62 L17.58,22.07 L18.75,21.35 L19.61,20.42 L20.26,19.09 L20.52,17.73 L20.52,16.58 L20.38,15.60 L19.78,14.05 L19.02,12.95 L18.39,12.33 L16.99,11.40 L17.85,9.38 L18.32,6.97 L18.28,4.39 L18.06,3.31 L17.70,2.26 L17.39,1.72 L16.96,1.31 L16.46,1.12 L15.91,1.10 L15.41,1.24 L14.65,1.69 L13.77,2.65 L13.00,4.27 L12.50,6.13 L12.24,8.30 L12.29,10.26 L11.86,10.31 L11.76,6.39 L11.43,4.44 L11.05,3.31 L10.40,2.15 L9.54,1.29 L8.73,1.00 Z" />
+</vector>
